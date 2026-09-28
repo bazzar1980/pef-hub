@@ -1,0 +1,23 @@
+{
+  "name": "@pef-hub/adapter-mystery-crm",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "zip": "wxt zip",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "@pef-hub/protocol": "workspace:*",
+    "@pef-hub/sdk-core": "workspace:*",
+    "@pef-hub/sdk-extension": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.287",
+    "typescript": "^5.6.0",
+    "wxt": "^0.20.0"
+  }
+}

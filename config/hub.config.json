@@ -1,0 +1,26 @@
+{
+  "bindAddress": "127.0.0.1",
+  "tls": {
+    "certPath": "../certs/test/localhost-fullchain.crt",
+    "keyPath": "../certs/test/localhost.key"
+  },
+  "pairingToken": "dev-pairing-token-change-me",
+  "heartbeatTimeoutSecs": 45,
+  "queueTtlSecs": 60,
+  "searchTimeoutMs": 2500,
+  "routing": {
+    "attributeKey": "crmTarget",
+    "queueRules": {
+      "Sales": "fake-crm",
+      "Support": "mystery-crm"
+    },
+    "fallback": "focused"
+  },
+  "pef": {
+    "url": "https://apps.mypurecloud.ie/crm/index.html?crm=framework-local-secure"
+  },
+  "listeners": [
+    { "crmId": "fake-crm",    "port": 9101, "allowedOrigins": ["chrome-extension://*"] },
+    { "crmId": "mystery-crm", "port": 9102, "allowedOrigins": ["chrome-extension://*"] }
+  ]
+}

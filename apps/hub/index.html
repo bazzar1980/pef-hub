@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PEF Hub</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="top">
+        <div class="brand">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="14" r="4" fill="currentColor"/><path d="M12 14 5 6M12 14l7-8M12 14V3" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          <h1>PEF Hub</h1>
+        </div>
+        <div class="overall" id="overall"><span class="lamp"></span><span class="overall-text">Starting</span></div>
+      </header>
+
+      <main class="board">
+        <section class="panel" aria-labelledby="h-genesys">
+          <h2 id="h-genesys">Genesys Cloud</h2>
+          <div class="kv" id="pef-state">
+            <div><dt>Agent</dt><dd id="pef-login">Not signed in</dd></div>
+            <div><dt>Interactions</dt><dd id="pef-ix">0</dd></div>
+            <div><dt>Waiting for CRM</dt><dd id="pef-queued">0</dd></div>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="h-ports">
+          <h2 id="h-ports">CRM connections</h2>
+          <p class="hint" id="bind-hint"></p>
+          <ol class="ports" id="ports"></ol>
+        </section>
+
+        <section class="panel grow" aria-labelledby="h-log">
+          <h2 id="h-log">Activity</h2>
+          <ol class="log" id="log"></ol>
+        </section>
+
+        <footer class="source" id="config-source"></footer>
+      </main>
+
+      <aside class="pef" aria-label="Genesys Cloud Embeddable Framework">
+        <iframe
+          id="pef"
+          title="Genesys Cloud"
+          allow="camera *; microphone *; autoplay *; clipboard-write *; hid *; speaker-selection *"
+        ></iframe>
+      </aside>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

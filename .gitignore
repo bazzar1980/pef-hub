@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.output/
+.wxt/
+target/
+*.log
+# Never commit customer certificates/keys
+certs/customer/
+
+# Claude Code local (per-user) settings
+.claude/settings.local.json

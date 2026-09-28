@@ -1,0 +1,17 @@
+{
+  "name": "pef-hub-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "hub:dev": "pnpm --filter @pef-hub/hub tauri dev",
+    "hub:build": "pnpm --filter @pef-hub/hub tauri build",
+    "ext:dev:fake": "pnpm --filter @pef-hub/adapter-fake-crm dev",
+    "ext:dev:mystery": "pnpm --filter @pef-hub/adapter-mystery-crm dev",
+    "ext:build": "pnpm --filter \"./adapters/**\" build",
+    "ext:zip": "pnpm --filter \"./adapters/**\" zip",
+    "adapter:new": "node tools/new-adapter.mjs",
+    "certs:gen": "bash scripts/certs/gen-certs.sh",
+    "typecheck": "pnpm -r typecheck"
+  }
+}
