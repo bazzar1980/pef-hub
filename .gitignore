@@ -9,3 +9,6 @@ certs/customer/
 
 # Claude Code local (per-user) settings
 .claude/settings.local.json
+
+# Tauri-generated capability schemas
+apps/hub/src-tauri/gen/schemas/
