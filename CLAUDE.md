@@ -48,7 +48,10 @@ CRM tab (Chrome/Edge)                         PEF Hub (Tauri 2, Windows, WebView
   `config.rs` (hub.config.json lookup + validation), `tls.rs` (rustls/ring, PEM),
   `ws.rs` (per-port WSS server, origin check, hello validation, heartbeat timeout),
   `router.rs` (sessions, routing, queue, search fan-out, Tauri commands/events), `main.rs` (tray, single instance).
+- `apps/dev-crm` – dev-only stand-in CRM pages (`window.pefHubCrm`, tel: links, event log) on 5173 (fake) / 4200 (mystery).
 - `pef/framework.js` – reference Embeddable Framework message contract (to merge into the real framework.js).
+  `scripts/serve-framework.mjs` serves it on https://localhost/framework.js for `?crm=framework-local-secure`.
+  Never commit a real OAuth client ID: keep the `<YOUR_OAUTH_CLIENT_ID>` placeholder (local ID in `pef/client-id.local`).
 - `config/hub.config.json` – listeners/ports, routing rules, TLS paths, PEF URL, timeouts.
 - `certs/test`, `scripts/certs` – test certs, gen-certs.sh, install-ca.ps1 / uninstall-ca.ps1.
 
@@ -73,6 +76,7 @@ green ON = hub + paired + agent signed in · amber ! = PEF not ready · red OFF 
 Windows, Node 24 LTS, pnpm, Rust ≥ 1.90 (current Tauri requires it), VS Build Tools (C++), WebView2.
 - `pnpm install`
 - `pnpm hub:dev` / `pnpm hub:build` (MSI + NSIS)
+- `pnpm pef:serve` (framework.js on :443), `pnpm crm:dev:fake`, `pnpm crm:dev:mystery` (dev CRM pages)
 - `pnpm ext:dev:fake`, `pnpm ext:dev:mystery`, `pnpm ext:build`, `pnpm ext:zip`
 - `pnpm typecheck` (all TS), `cargo check` in `apps/hub/src-tauri`
 

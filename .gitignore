@@ -12,3 +12,6 @@ certs/customer/
 
 # Tauri-generated capability schemas
 apps/hub/src-tauri/gen/schemas/
+
+# Local OAuth client ID for the dev framework.js server
+pef/client-id.local

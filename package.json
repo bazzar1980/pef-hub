@@ -2,12 +2,17 @@
   "name": "pef-hub-monorepo",
   "private": true,
   "version": "0.1.0",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "hub:dev": "pnpm --filter @pef-hub/hub tauri dev",
     "hub:build": "pnpm --filter @pef-hub/hub tauri build",
     "ext:dev:fake": "pnpm --filter @pef-hub/adapter-fake-crm dev",
     "ext:dev:mystery": "pnpm --filter @pef-hub/adapter-mystery-crm dev",
+    "crm:dev:fake": "pnpm --filter @pef-hub/dev-crm dev:fake",
+    "crm:dev:mystery": "pnpm --filter @pef-hub/dev-crm dev:mystery",
+    "pef:serve": "node scripts/serve-framework.mjs",
     "ext:build": "pnpm --filter \"./adapters/**\" build",
     "ext:zip": "pnpm --filter \"./adapters/**\" zip",
     "adapter:new": "node tools/new-adapter.mjs",

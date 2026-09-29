@@ -11,7 +11,8 @@ use std::sync::Arc;
 use tauri::{
     menu::{Menu, MenuItem},
     tray::TrayIconBuilder,
-    Manager, WindowEvent,
+    webview::NewWindowResponse,
+    Manager, Url, WebviewUrl, WebviewWindowBuilder, WindowEvent,
 };
 
 use router::Hub;
@@ -22,6 +23,36 @@ fn show_main(app: &tauri::AppHandle) {
         let _ = w.unminimize();
         let _ = w.set_focus();
     }
+}
+
+/// Genesys Cloud region domain derived from the PEF URL: apps.mypurecloud.ie -> mypurecloud.ie.
+fn region_domain(pef_url: &str) -> Option<String> {
+    let host = Url::parse(pef_url).ok()?.host_str()?.to_owned();
+    host.split_once('.').map(|(_, domain)| domain.to_owned())
+}
+
+/// Main window. Built in code (not tauri.conf.json) to install a new-window handler: without one,
+/// WebView2 drops every window.open, including the PEF login popup (dedicatedLoginWindow).
+fn build_main_window(app: &tauri::App, pef_url: &str) -> tauri::Result<()> {
+    let domain = region_domain(pef_url);
+    WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
+        .title("PEF Hub")
+        .inner_size(780.0, 860.0)
+        .min_inner_size(700.0, 600.0)
+        .use_https_scheme(true)
+        .on_new_window(move |url, _features| {
+            let host = url.host_str().unwrap_or_default();
+            let allowed = domain.as_deref().is_some_and(|d| url.scheme() == "https" && (host == d || host.ends_with(&format!(".{d}"))));
+            if allowed {
+                log::info!("popup allowed: {url}");
+                NewWindowResponse::Allow
+            } else {
+                log::warn!("popup denied: {url}");
+                NewWindowResponse::Deny
+            }
+        })
+        .build()?;
+    Ok(())
 }
 
 fn build_tray(app: &tauri::App) -> tauri::Result<()> {
@@ -57,6 +88,7 @@ fn main() {
                 tauri::async_runtime::spawn(ws::serve(listener, acceptor.clone(), hub.clone()));
             }
             hub.spawn_housekeeping();
+            build_main_window(app, &cfg.pef.url)?;
             build_tray(app)?;
             Ok(())
         })

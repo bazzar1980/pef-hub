@@ -10,17 +10,7 @@
     "frontendDist": "../dist"
   },
   "app": {
-    "windows": [
-      {
-        "label": "main",
-        "title": "PEF Hub",
-        "width": 780,
-        "height": 860,
-        "minWidth": 700,
-        "minHeight": 600,
-        "useHttpsScheme": true
-      }
-    ],
+    "windows": [],
     "security": { "csp": null }
   },
   "bundle": {

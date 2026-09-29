@@ -49,13 +49,30 @@ pnpm install
 # 1. Trust the TEST CA (current user, Windows asks for confirmation)
 powershell -ExecutionPolicy Bypass -File scripts\certs\install-ca.ps1
 
-# 2. Hub (Vite on https://localhost:1420 + Tauri window, listeners 9101/9102)
+# 2. framework.js for ?crm=framework-local-secure (https://localhost/framework.js, port 443)
+#    Set your OAuth client ID in pef/framework.js, or in pef/client-id.local (gitignored)
+pnpm pef:serve
+
+# 3. Hub (Vite on https://localhost:1420 + Tauri window, listeners 9101/9102)
 pnpm hub:dev
 
-# 3. Extensions (each opens a Chrome instance with the extension loaded)
+# 4. Dev CRM pages (stand-ins for the real CRMs, window.pefHubCrm + tel: links + event log)
+pnpm crm:dev:fake       # https://localhost:5173
+pnpm crm:dev:mystery    # https://localhost:4200
+
+# 5. Extensions (each opens a Chrome instance with the extension loaded)
 pnpm ext:dev:fake       # matches https://localhost:5173/*
 pnpm ext:dev:mystery    # matches https://localhost:4200/*
 ```
+
+Dev notes:
+
+* The PEF login runs in a popup (`dedicatedLoginWindow: true`): login.mypurecloud.ie refuses to be framed under the hub.
+  The hub only allows popups on the region domain derived from `pef.url` (e.g. `*.mypurecloud.ie`).
+* OAuth client: grant type **Code Authorization (PKCE)**, redirect URI `https://apps.mypurecloud.ie/crm/authWindow.html`
+  (the PEF uses PKCE for the popup login).
+* Antivirus HTTPS scanning (e.g. Avast Web Shield) intercepts loopback TLS too. It works as long as the browser trusts
+  the antivirus root, but check it on customer PCs.
 
 Production builds:
 

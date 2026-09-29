@@ -26,7 +26,9 @@
       settings: {
         embedWebRTCByDefault: true,
         enableCallLogs: true,
-        dedicatedLoginWindow: false,
+        // Login must run in a popup: login.mypurecloud.ie refuses to be framed when the top-level
+        // page is the hub (https://tauri.localhost / https://localhost:1420), not a trusted CRM domain.
+        dedicatedLoginWindow: true,
         embeddedInteractionWindow: true,
         searchTargets: ["people", "queues", "frameworkcontacts"]
       }
